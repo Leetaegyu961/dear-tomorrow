@@ -17,13 +17,25 @@ html, body {
 }
 
 body {
-  background: var(--background);
+  background: #1a1a1a;
   color: var(--foreground);
   font-family: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 17px;
   line-height: 1.47;
   letter-spacing: -0.02em;
   -webkit-tap-highlight-color: transparent;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100dvh;
+}
+
+#mobile-shell {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  min-height: 100dvh;
+  background: var(--background);
+  overflow-x: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 8px 80px rgba(0,0,0,0.6);
 }

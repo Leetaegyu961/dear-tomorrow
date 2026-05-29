@@ -37,7 +37,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className="min-h-full antialiased">
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <div id="mobile-shell">{children}</div>
+        </AuthProvider>
       </body>
     </html>
   );
