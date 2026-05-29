@@ -1,0 +1,18 @@
+{
+  "name": "내일의 나에게",
+  "short_name": "내일의나에게",
+  "description": "오늘의 한 줄 일기를 쓰고, 내일의 나에게 편지를 보내세요.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F3",
+  "theme_color": "#FAF8F3",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

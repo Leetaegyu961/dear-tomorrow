@@ -49,7 +49,6 @@ export default function BottomNav() {
       backdropFilter: "blur(16px)",
       borderTop: "1px solid #EBEBEA",
       display: "flex",
-      paddingBottom: "env(safe-area-inset-bottom)",
     }}>
       {tabs.map((tab) => {
         const active = pathname === tab.href;

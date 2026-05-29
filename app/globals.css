@@ -11,6 +11,11 @@
   --font-sans: "Pretendard", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+html, body {
+  height: 100%;
+  overscroll-behavior: none;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -18,4 +23,7 @@ body {
   font-size: 17px;
   line-height: 1.47;
   letter-spacing: -0.02em;
+  -webkit-tap-highlight-color: transparent;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
