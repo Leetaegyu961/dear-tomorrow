@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { getKSTDateString, formatDateKorean } from "@/lib/date";
+import BottomNav from "@/components/BottomNav";
 
 function getNow(): string {
   const d = new Date(Date.now() + 9 * 3600 * 1000);
@@ -165,6 +166,7 @@ export default function WritePage() {
         </div>
       </div>
 
+      <BottomNav />
     </div>
   );
 }
