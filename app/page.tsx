@@ -48,7 +48,6 @@ function calcStreak(dates: string[], today: string): number {
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [yesterdayEntry, setYesterdayEntry] = useState<Entry | null>(null);
-  const [wroteToday, setWroteToday] = useState(false);
   const [recentEntries, setRecentEntries] = useState<Entry[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [monthCount, setMonthCount] = useState(0);
@@ -83,17 +82,15 @@ export default function HomePage() {
 
       if (!mounted) return;
       const list: Entry[] = recent ?? [];
-      const todayEntry = list.find((e) => e.date === today);
       const thisMonth = today.slice(0, 7);
       const weekMap: Record<string, Entry> = {};
-      list.forEach((e) => { if (weekDays.includes(e.date)) weekMap[e.date] = e; });
+      list.forEach((e) => { if (weekDays.includes(e.date) && !weekMap[e.date]) weekMap[e.date] = e; });
 
       // 첫 기록 날짜 별도 조회
       const { data: firstEntry } = await supabase
         .from("entries").select("date").order("date", { ascending: true }).limit(1).maybeSingle();
 
       if (!mounted) return;
-      setWroteToday(!!todayEntry);
       setYesterdayEntry(list.find((e) => e.date === yesterday) ?? null);
       setRecentEntries(list.slice(0, 8));
       setTotalCount(count ?? 0);
@@ -244,37 +241,19 @@ export default function HomePage() {
         </div>
 
         {/* ── CTA ── */}
-        {wroteToday ? (
-          <div style={{
-            background: "#fff", borderRadius: "14px", border: "1px solid #EBEBEA",
-            padding: "16px 18px", marginBottom: "16px",
-            display: "flex", alignItems: "center", gap: "10px",
-          }}>
-            <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#F0EFEC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M3 7l3 3 5-6" stroke="#9B9690" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <p style={{ fontSize: "14px", fontWeight: 600, color: "#1C1B18", marginBottom: "2px" }}>오늘은 이미 썼어요.</p>
-              <p style={{ fontSize: "12px", color: "#B8B5AF" }}>내일 아침, 편지가 도착할 거예요.</p>
-            </div>
-          </div>
-        ) : (
-          <Link
-            href="/write"
-            className="block transition-transform active:scale-95"
-            style={{
-              background: "#1C1B18", color: "#FAF9F6",
-              borderRadius: "14px", padding: "18px 20px",
-              fontSize: "15px", fontWeight: 700, letterSpacing: "-0.02em",
-              textDecoration: "none", textAlign: "center",
-              marginBottom: "16px",
-            }}
-          >
-            오늘 하루 기록하기 →
-          </Link>
-        )}
+        <Link
+          href="/write"
+          className="block transition-transform active:scale-95"
+          style={{
+            background: "#1C1B18", color: "#FAF9F6",
+            borderRadius: "14px", padding: "18px 20px",
+            fontSize: "15px", fontWeight: 700, letterSpacing: "-0.02em",
+            textDecoration: "none", textAlign: "center",
+            marginBottom: "16px",
+          }}
+        >
+          기록 남기기 →
+        </Link>
 
         {/* ── 최근 기록 ── */}
         {recentEntries.length > 0 && (
@@ -294,7 +273,7 @@ export default function HomePage() {
               )}
             </div>
             {recentEntries.map((entry, i) => (
-              <Link key={entry.id} href={`/entry/${entry.date}`} style={{ textDecoration: "none" }}>
+              <Link key={entry.id} href={`/entry/${entry.id}`} style={{ textDecoration: "none" }}>
                 <div style={{
                   padding: "11px 18px",
                   borderBottom: i < recentEntries.length - 1 ? "1px solid #F7F6F4" : "none",
